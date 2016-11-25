@@ -36,7 +36,7 @@ EOT;
      */
     protected function processResponse($xml)
     {
-        $site = $xml->domain->get->result;
+        $site = $xml->site->get->result;
 
         if ((string)$site->status == 'error') {
             throw new ApiRequestException($site);
@@ -48,7 +48,7 @@ EOT;
         $hosting_type = (string)$site->data->gen_info->htype;
 
         return [
-            'id' => (string)$site->id,
+            'id' => (int)$site->id,
             'status' => (string)$site->status,
             'created' => (string)$site->data->gen_info->cr_date,
             'name' => (string)$site->data->gen_info->name,
