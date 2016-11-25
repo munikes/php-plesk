@@ -11,25 +11,33 @@ class ListDatabaseUsers extends BaseRequest
 <packet version="1.4.2.0">
 <database>
    <get-db-users>
-      <filter>
-          <db-id>{DATABASE_ID}</db-id>
-      </filter>
+      {FILTER}
    </get-db-users>
 </database>
 </packet>
 EOT;
 
     /**
-     * @var int
-     */
-    public $id;
-
-    /**
      * @var array
      */
     protected $default_params = [
-        'database_id' => null,
+        'filter' => null,
     ];
+
+    /**
+     * @param array $config
+     * @param array $params
+     * @throws ApiRequestException
+     */
+    public function __construct($config, $params = [])
+    {
+        $this->default_params['filter'] = new Node('filter');
+        if (isset($params['database_id'])) {
+            $ownerDBIdNode = new Node('db-id', $params['database_id']);
+            $params['filter'] = new Node('filter', $ownerDBIdNode);
+        }
+        parent::__construct($config, $params);
+    }
 
     /**
      * @param $xml
