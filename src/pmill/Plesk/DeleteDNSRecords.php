@@ -9,14 +9,11 @@ class DeleteDNSRecords extends BaseRequest
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
 <packet>
-    <dns>
-        <del-rec>
-            <filter>
-                <id>{ID}</id>
-                <site-id>{ID}</site-id>
-            </filter>
-        </del-rec>
-    </dns>
+  <dns>
+    <del_rec>
+      {FILTER}
+    </del_rec>
+  </dns>
 </packet>
 EOT;
 
@@ -24,8 +21,7 @@ EOT;
      * @var array
      */
     protected $default_params = [
-        'id' => null,
-        'site_id' => null,
+        'filter' => '<filter/>',
     ];
 
     /**
@@ -33,16 +29,19 @@ EOT;
      * @param array $params
      * @throws ApiRequestException
      */
-    public function __construct($config, $params)
+    public function __construct(array $config, $params)
     {
-        if (isset($params['domain'])) {
-            $request = new GetSite($config, ['domain' => $params['domain']]);
-            $info = $request->process();
+      $this->default_params['filter'] = new Node('filter');
 
-            $params['site_id'] = $info['id'];
-        }
+      if (isset($params['site-id'])) {
+        $ownerSiteId = new Node('site-id', $params['site-id']);
+        $params['filter'] = new Node('filter', $ownerSiteId);
+      }else if(isset($params['id'])){
+        $ownerId = new Node('id', $params['id']);
+        $params['filter'] = new Node('filter', $ownerId);
+      }
 
-        parent::__construct($config, $params);
+      parent::__construct($config, $params);
     }
 
     /**
@@ -52,12 +51,13 @@ EOT;
      */
     protected function processResponse($xml)
     {
-        $result = $xml->dns->{'del-rec'}->result;
+        $result = $xml->dns->{'del_rec'}->result;
 
         if ($result->status == 'error') {
             throw new ApiRequestException($result);
         }
 
         return true;
+
     }
 }
