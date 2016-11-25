@@ -27,6 +27,25 @@ EOT;
     ];
 
     /**
+     * GetDatabaseUser constructor.
+     * @param array $config
+     * @param array $params
+     */
+    public function __construct(array $config, $params)
+    {
+        if (isset($params['username'])) {
+            $request = new ListDatabaseUsers($config);
+            $users = $request->process();
+            foreach($users as $user){
+                if ($user['login'] == $params['username'])
+                    $params['id'] = $user['id'];
+            }
+        }
+
+        parent::__construct($config, $params);
+    }
+
+    /**
      * @param $xml
      * @return bool
      * @throws ApiRequestException
