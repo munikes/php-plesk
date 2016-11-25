@@ -89,7 +89,7 @@ EOT;
 
         $this->params = Xml::sanitizeArray($this->params);
 
-        $this->http = is_null($http) ? new CurlHttpRequest($this->config['host']) : $http;
+        $this->http = is_null($http) ? new CurlHttpRequest($this->config['host'], $this->config['port']) : $http;
         if (isset($this->config['username']) && isset($this->config['password'])) {
             $this->http->setCredentials($this->config['username'], $this->config['password']);
         }

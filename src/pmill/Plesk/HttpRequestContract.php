@@ -6,8 +6,9 @@ interface HttpRequestContract
     /**
      * CurlHttpRequest constructor.
      * @param $host
+     * @param $port
      */
-    public function __construct($host);
+    public function __construct($host, $port);
 
     /**
      * @param $username

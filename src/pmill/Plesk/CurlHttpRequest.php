@@ -21,10 +21,11 @@ class CurlHttpRequest implements HttpRequestContract
     /**
      * CurlHttpRequest constructor.
      * @param $host
+     * @param $port
      */
-    public function __construct($host)
+    public function __construct($host, $port)
     {
-        $this->setupCurl($host);
+        $this->setupCurl($host, $port);
     }
 
     /**
@@ -55,11 +56,12 @@ class CurlHttpRequest implements HttpRequestContract
 
     /**
      * @param $host
+     * @param $port
      */
-    public function setupCurl($host)
+    public function setupCurl($host, $port)
     {
         $this->curl = curl_init();
-        curl_setopt($this->curl, CURLOPT_URL, "https://".$host.":8443/enterprise/control/agent.php");
+        curl_setopt($this->curl, CURLOPT_URL, "https://".$host.":".$port."/enterprise/control/agent.php");
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curl, CURLOPT_POST, true);
         curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, false);
