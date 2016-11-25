@@ -31,7 +31,7 @@ EOT;
     ];
 
     /**
-     * GetClient constructor.
+     * GetUser constructor.
      * @param array $config
      * @param array $params
      */
@@ -41,8 +41,12 @@ EOT;
             $request = new ListUsers($config);
             $users = $request->process();
             foreach($users as $user){
-                if ($user['login'] == $params['username'])
-                    $params['guid'] = $user['guid'];
+              if ($user['login'] == $params['username']){
+                $params['guid'] = $user['guid'];
+              }else{
+                $msg = 'There is not a username: '. $params['username'];
+                throw new ApiRequestException($msg);
+              }
             }
         }
 
