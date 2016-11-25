@@ -8,13 +8,11 @@ class ListDNSRecords extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.3.0">
+<packet version="1.6.7.0">
 <dns>
-        <get_rec>
-                <filter>
-                        <site-id>{SITE_ID}</site-id>
-                </filter>
-        </get_rec>
+  <get_rec>
+    {FILTER}
+  </get_rec>
 </dns>
 </packet>
 EOT;
@@ -23,7 +21,7 @@ EOT;
      * @var array
      */
     protected $default_params = [
-        'site_id' => null,
+        'filter' => '<filter/>',
     ];
 
     /**
@@ -31,16 +29,19 @@ EOT;
      * @param array $params
      * @throws ApiRequestException
      */
-    public function __construct($config, $params)
+    public function __construct(array $config, $params = [])
     {
-        if (isset($params['domain'])) {
-            $request = new GetSite($config, ['domain' => $params['domain']]);
-            $info = $request->process();
+      $this->default_params['filter'] = new Node('filter');
 
-            $params['site_id'] = $info['id'];
-        }
+      if (isset($params['domain'])) {
+        $request = new GetSite($config, ['domain' => $params['domain']]);
+        $info = $request->process();
 
-        parent::__construct($config, $params);
+        $ownerSiteId = new Node('site-id', $info['id']);
+        $params['filter'] = new Node('filter', $ownerSiteId);
+      }
+
+      parent::__construct($config, $params);
     }
 
     /**
@@ -52,6 +53,7 @@ EOT;
         $result = [];
 
         foreach ($xml->dns->get_rec->children() as $node) {
+          if (isset($node->id)){
             $result[] = [
                 'status' => (string)$node->status,
                 'id' => (int)$node->id,
@@ -60,6 +62,7 @@ EOT;
                 'value' => (string)$node->data->value,
                 'opt' => (string)$node->data->opt,
             ];
+          }
         }
 
         return $result;
