@@ -8,7 +8,7 @@ class GetServerInfo extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.4.2.0">
+<packet>
 <server>
 	<get>
 		<gen_info/>
