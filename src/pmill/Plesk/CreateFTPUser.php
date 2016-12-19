@@ -8,13 +8,13 @@ class CreateFTPUser extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.5.0">
+<packet>
 <ftp-user>
     <add>
         <name>{NAME}</name>
         <password>{PASSWORD}</password>
-        <webspace-id>{WEBSPACE-ID}</webspace-id>
         <home/>
+        <webspace-id>{WEBSPACE-ID}</webspace-id>
     </add>
 </ftp-user>
 </packet>
