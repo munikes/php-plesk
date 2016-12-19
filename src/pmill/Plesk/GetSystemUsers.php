@@ -94,6 +94,10 @@ EOT;
               {
                 $result[$i]['shell'] = (string)$property->value;
               }
+              else if((string)$property->name == 'ftp_password_type')
+              {
+                $result[$i]['type'] = (string)$property->value;
+              }
             }
         }
 
