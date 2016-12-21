@@ -8,11 +8,11 @@ class GetDatabaseServer extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.7.0">
+<packet>
 <db_server>
    <get-local>
       <filter>
-          {FILTER}
+          <type>{TYPE}</type>
       </filter>
    </get-local>
 </db_server>
@@ -20,27 +20,12 @@ class GetDatabaseServer extends BaseRequest
 EOT;
 
     /**
+     *
      * @var array
      */
     protected $default_params = [
-        'filter' => null,
+        'type' => null,
     ];
-
-    /**
-     * GetDatabaseServer constructor.
-     * @param array $config
-     * @param array $params
-     */
-    public function __construct(array $config, $params = [])
-    {
-        if (isset($params['type'])) {
-            $params['filter'] = new Node('type', $params['type']);
-        }
-        if (isset($params['id'])) {
-            $params['filter'] = new Node('id', $params['id']);
-        }
-        parent::__construct($config, $params);
-    }
 
     /**
      * @param $xml
