@@ -16,6 +16,7 @@ class GetSite extends BaseRequest
 		</filter>
 		<dataset>
 			<hosting/>
+			<gen_info/>
 		</dataset>
 	</get>
 </site>

@@ -16,6 +16,7 @@ class GetSystemUsers extends BaseRequest
     <get>
         {FILTER}
         <dataset>
+			<gen_info/>
 			<hosting/>
 			<subscriptions/>
 		</dataset>
