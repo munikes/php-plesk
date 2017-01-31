@@ -9,7 +9,7 @@ class CreateDNSRecord extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.7.0">
+<packet version="{VERSION}">
   <dns>
     <add_rec>
       <site-id>{SITE_ID}</site-id>

@@ -8,7 +8,7 @@ class ListDatabaseServers extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet>
+<packet version="{VERSION}">
 <db_server>
 	<get-local>
 		<filter />

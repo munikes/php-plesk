@@ -8,7 +8,7 @@ class UpdateEmailPassword extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.0.2">
+<packet version="{VERSION}">
     <mail>
         <update>
             <add>

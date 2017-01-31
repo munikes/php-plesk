@@ -8,7 +8,7 @@ class CreateDatabaseUser extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.5.0">
+<packet version="{VERSION}">
 <database>
     <add-db-user>
         {OPTIONS}

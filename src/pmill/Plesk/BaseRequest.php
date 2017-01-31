@@ -22,9 +22,14 @@ abstract class BaseRequest
     protected $params = [];
 
     /**
+     * @var string
+     */
+    protected $default_version = '1.6.3.0';
+
+    /**
      * @var array
      */
-	protected $default_params = [];
+    protected $default_params = [];
 
     /**
      * @var array
@@ -120,6 +125,8 @@ EOT;
             return false;
         }
 
+        $this->default_params['version'] = $this->default_version;
+
         foreach ($this->default_params as $key => $value) {
             if (!isset($this->params[$key])) {
                 if (is_null($value)) {
@@ -188,7 +195,6 @@ EOT;
     protected function getPacket()
     {
         $packet = $this->xml_packet;
-
         foreach ($this->params as $key => $value) {
             if (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
@@ -196,7 +202,6 @@ EOT;
 
             $packet = str_replace('{'.strtoupper($key).'}', $value, $packet);
         }
-
         return $packet;
     }
 

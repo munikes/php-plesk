@@ -8,7 +8,7 @@ class DeleteDNSRecords extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet>
+<packet version="{VERSION}">
   <dns>
     <del_rec>
       {FILTER}

@@ -8,7 +8,7 @@ class ListSecretKeys extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet>
+<packet version="{VERSION}">
 <secret_key>
    <get_info>
       {FILTER}

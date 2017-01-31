@@ -8,7 +8,7 @@ class CreateFTPUser extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet>
+<packet version="{VERSION}">
 <ftp-user>
     <add>
         <name>{NAME}</name>

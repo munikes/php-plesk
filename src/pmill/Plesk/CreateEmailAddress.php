@@ -8,7 +8,7 @@ class CreateEmailAddress extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
-<packet version="1.6.3.5">
+<packet version="{VERSION}">
     <mail>
         <create>
             <filter>

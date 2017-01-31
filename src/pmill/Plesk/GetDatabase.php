@@ -8,7 +8,7 @@ class GetDatabase extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet>
+<packet version="{VERSION}">
 <database>
 	<get-db>
 		<filter>

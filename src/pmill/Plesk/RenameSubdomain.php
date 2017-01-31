@@ -8,7 +8,7 @@ class RenameSubdomain extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.5.2.0">
+<packet version="{VERSION}">
 <subdomain>
     <rename>
         <id>{ID}</id>

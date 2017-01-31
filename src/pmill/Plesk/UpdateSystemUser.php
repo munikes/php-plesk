@@ -8,7 +8,7 @@ class UpdateSystemUser extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet>
+<packet version="{VERSION}">
     <webspace>
         <set>
             {FILTER}

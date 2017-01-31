@@ -8,7 +8,7 @@ class CreateSecretKey extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet>
+<packet version="{VERSION}">
 <secret_key>
    <create>
       <ip_address>{IP_ADDRESS}</ip_address>

@@ -8,7 +8,7 @@ class DeleteSiteAlias extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.3.5">
+<packet version="{VERSION}">
     <site-alias>
         <delete>
             <filter>

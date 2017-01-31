@@ -8,7 +8,7 @@ class SetDefaultDatabaseUser extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.7.0">
+<packet version="{VERSION}">
 <database>
    <set-default-user>
         <db-id>{DATABASE_ID}</db-id>
