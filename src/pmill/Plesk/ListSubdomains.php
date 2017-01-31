@@ -10,7 +10,7 @@ class ListSubdomains extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.0.2">
+<packet version="{VERSION}">
     <subdomain>
         <get>
             <filter/>
@@ -63,8 +63,8 @@ EOT;
                 'status' => (string)$node->status,
                 'parent' => (string)$node->data->parent,
                 'name' => (string)$node->data->name,
-                'php' => (string)Xml::findProperty($node->data, 'php'),
-                'php_handler_type' => (string)Xml::findProperty($node->data, 'php_handler_type'),
+                'php' => (bool)Xml::findProperty($node->data, 'php'),
+                'php_handler_id' => (string)Xml::findProperty($node->data, 'php_handler_id'),
                 'www_root' => (string)Xml::findProperty($node->data, 'www_root'),
             ];
           }
