@@ -8,7 +8,7 @@ class CreateSubscription extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
-<packet version="1.6.3.0">
+<packet version="{VERSION}">
 <webspace>
 	<add>
 		<gen_setup>
@@ -27,6 +27,10 @@ class CreateSubscription extends BaseRequest
 				<property>
 					<name>ftp_password</name>
 					<value>{PASSWORD}</value>
+				</property>
+				<property>
+					<name>empty-document-root</name>
+					<value>true</value>
 				</property>
 				<ip_address>{IP_ADDRESS}</ip_address>
 			</vrt_hst>

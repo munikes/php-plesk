@@ -8,7 +8,7 @@ class CreateSubdomain extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
-<packet version="1.6.3.5">
+<packet version="{VERSION}">
     <subdomain>
         <add>
             <parent>{DOMAIN}</parent>
@@ -32,6 +32,10 @@ class CreateSubdomain extends BaseRequest
             <property>
 				<name>php</name>
 				<value>{PHP}</value>
+            </property>
+            <property>
+				<name>empty-document-root</name>
+				<value>true</value>
             </property>
         </add>
     </subdomain>

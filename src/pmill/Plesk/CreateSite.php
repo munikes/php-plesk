@@ -8,7 +8,7 @@ class CreateSite extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.3.5">
+<packet version="{VERSION}">
 <site>
 	<add>
 		<gen_setup>
@@ -32,6 +32,10 @@ class CreateSite extends BaseRequest
 				<property>
 					<name>www_root</name>
 					<value>{WWW_ROOT}</value>
+				</property>
+				<property>
+					<name>empty-document-root</name>
+					<value>true</value>
 				</property>
 			</vrt_hst>
 		</hosting>
