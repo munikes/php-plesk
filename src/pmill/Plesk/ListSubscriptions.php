@@ -12,13 +12,14 @@ class ListSubscriptions extends BaseRequest
 <?xml version="1.0"?>
 <packet version="{VERSION}">
 <webspace>
-    <get>
-        <filter/>
-        <dataset>
-			<hosting/>
-			<subscriptions/>
-		</dataset>
-    </get>
+  <get>
+    <filter/>
+    <dataset>
+      <hosting/>
+      <subscriptions/>
+      <gen_info/>
+    </dataset>
+  </get>
 </webspace>
 </packet>
 EOT;
