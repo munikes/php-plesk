@@ -24,7 +24,7 @@ abstract class BaseRequest
     /**
      * @var string
      */
-    protected $default_version = '1.6.3.0';
+    protected $default_version = '1.6.8.0';
 
     /**
      * @var array
