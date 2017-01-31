@@ -8,13 +8,13 @@ class GetDNSRecord extends BaseRequest
      */
     public $xml_packet = <<<EOT
 <?xml version="1.0"?>
-<packet version="1.6.7.0">
+<packet version="{VERSION}">
 <dns>
   <get_rec>
     <filter>
       <id>{ID}</id>
     </filter>
-	</get_rec>
+  </get_rec>
 </dns>
 </packet>
 EOT;
@@ -39,15 +39,13 @@ EOT;
         foreach($records as $record){
           if($record['host'] == $params['domain'] and $record['type'] == $params['type']){
             $params['id'] = $record['id'];
-          }else{
-            $msg = 'There is not a DNS record with type: '. $params['type'].' ,and this name: '.$params['domain'];
-            throw new ApiRequestException($msg);
+            return parent::__construct($config, $params);
           }
         }
-
+        $msg = 'There is not a DNS record with type: '. $params['type'].' ,and this name: '.$params['domain'];
+        throw new ApiRequestException($msg);
       }
 
-      parent::__construct($config, $params);
     }
 
     /**
