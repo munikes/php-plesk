@@ -13,7 +13,7 @@ class ListSubdomains extends BaseRequest
 <packet version="{VERSION}">
     <subdomain>
         <get>
-            <filter/>
+            {FILTER}
         </get>
     </subdomain> 
 </packet>
@@ -23,7 +23,7 @@ EOT;
      * @var array
      */
     protected $default_params = [
-        'filter' => null,
+        'filter' => '<filter/>',
     ];
 
     /**
@@ -36,13 +36,8 @@ EOT;
         $this->default_params['filter'] = new Node('filter');
 
         if (isset($params['domain'])) {
-            $ownerIdNode = new Node('site-name', $params['domain']);
-            $params['filter'] = new Node('filter', $ownerIdNode);
-        }
-
-        if (isset($params['site_id'])) {
-            $ownerIdNode = new Node('site-id', $params['site_id']);
-            $params['filter'] = new Node('filter', $ownerIdNode);
+            $ownerParentNameNode = new Node('parent-name', $params['domain']);
+            $params['filter'] = new Node('filter', $ownerParentNameNode);
         }
 
         parent::__construct($config, $params);
