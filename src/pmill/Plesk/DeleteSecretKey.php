@@ -49,6 +49,9 @@ EOT;
      */
     protected function processResponse($xml)
     {
-        return true;
+      if ($xml->secret_key->delete->result->status == 'error') {
+        throw new ApiRequestException($xml->secret_key->delete->result);
+      }
+      return true;
     }
 }
