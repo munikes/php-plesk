@@ -28,10 +28,6 @@ class CreateSubscription extends BaseRequest
 					<name>ftp_password</name>
 					<value>{PASSWORD}</value>
 				</property>
-				<property>
-					<name>empty-document-root</name>
-					<value>true</value>
-				</property>
 				<ip_address>{IP_ADDRESS}</ip_address>
 			</vrt_hst>
 		</hosting>

@@ -33,10 +33,6 @@ class CreateSubdomain extends BaseRequest
 				<name>php</name>
 				<value>{PHP}</value>
             </property>
-            <property>
-				<name>empty-document-root</name>
-				<value>true</value>
-            </property>
         </add>
     </subdomain>
 </packet>

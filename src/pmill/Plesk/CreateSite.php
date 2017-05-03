@@ -33,10 +33,6 @@ class CreateSite extends BaseRequest
 					<name>www_root</name>
 					<value>{WWW_ROOT}</value>
 				</property>
-				<property>
-					<name>empty-document-root</name>
-					<value>true</value>
-				</property>
 			</vrt_hst>
 		</hosting>
 	</add>
