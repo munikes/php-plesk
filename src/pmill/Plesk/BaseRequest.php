@@ -24,7 +24,7 @@ abstract class BaseRequest
     /**
      * @var string
      */
-    protected $default_version = '1.6.8.0';
+    protected $default_version = '';
 
     /**
      * @var array
@@ -92,6 +92,10 @@ EOT;
             throw new ApiRequestException("Error: Incorrect request parameters submitted");
         }
 
+        // Version as a config param too
+        if (isset($this->config['version']))
+            $this->params['version'] = $this->config['version'];
+
         $this->params = Xml::sanitizeArray($this->params);
 
         $this->http = is_null($http) ? new CurlHttpRequest($this->config['host'], $this->config['port']) : $http;
@@ -125,7 +129,8 @@ EOT;
             return false;
         }
 
-        $this->default_params['version'] = $this->default_version;
+        if (isset($this->default_version))
+            $this->default_params['version'] = $this->default_version;
 
         foreach ($this->default_params as $key => $value) {
             if (!isset($this->params[$key])) {
