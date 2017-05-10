@@ -17,6 +17,7 @@ class CreateEmailAddress extends BaseRequest
                     <name>{USERNAME}</name>
                     <mailbox>
                         <enabled>{ENABLED}</enabled>
+                        {QUOTA}
                     </mailbox>
                     <password>
                         <value>{PASSWORD}</value>
@@ -50,19 +51,24 @@ EOT;
      */
     public function __construct($config, $params)
     {
-        parent::__construct($config, $params);
-
-        if (!filter_var($this->params['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
             throw new ApiRequestException("Error: Invalid email submitted");
         }
 
-        list($username, $domain) = explode("@", $this->params['email']);
+        list($username, $domain) = explode("@", $params['email']);
 
         $request = new GetSite($config, ['domain' => $domain]);
         $info = $request->process();
 
-        $this->params['site_id'] = $info['id'];
-        $this->params['username'] = $username;
+        $params['site_id'] = $info['id'];
+        $params['username'] = $username;
+
+        if (is_int($params['quota']))
+        {
+          $params['quota'] = new Node('quota', $params['quota']);
+        }
+
+        parent::__construct($config, $params);
     }
 
     /**
