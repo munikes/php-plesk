@@ -13,6 +13,7 @@ class ListEmailAddresses extends BaseRequest
 	<get_info>
 		<filter>
 			<site-id>{SITE_ID}</site-id>
+      {USERNAME}
 		</filter>
 		<mailbox/>
 	</get_info>
@@ -24,7 +25,8 @@ EOT;
      * @var array
      */
     protected $default_params = [
-        'site_id' => null,
+      'site_id' => null,
+      'username' => null,
     ];
 
     /**
@@ -39,6 +41,10 @@ EOT;
             $info = $request->process();
 
             $params['site_id'] = $info['id'];
+        }
+        if (!empty($params['username']))
+        {
+          $params['username'] = new Node('name', $params['username']);
         }
 
         parent::__construct($config, $params);
