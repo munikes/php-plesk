@@ -64,6 +64,7 @@ EOT;
                 'id' => (int)$node->mailname->id,
                 'username' => (string)$node->mailname->name,
                 'enabled' => (bool)$node->mailname->mailbox->enabled,
+                'quota' => (int)$node->mailname->mailbox->quota,
                 'password' => (string)$node->mailname->password->value,
             ];
         }
