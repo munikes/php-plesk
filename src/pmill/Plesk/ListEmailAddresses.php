@@ -26,7 +26,6 @@ EOT;
      */
     protected $default_params = [
       'site_id' => null,
-      'username' => null,
     ];
 
     /**
@@ -46,7 +45,6 @@ EOT;
         {
           $params['username'] = new Node('name', $params['username']);
         }
-
         parent::__construct($config, $params);
     }
 
