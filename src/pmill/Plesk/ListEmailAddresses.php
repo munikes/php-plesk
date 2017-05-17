@@ -13,9 +13,10 @@ class ListEmailAddresses extends BaseRequest
 	<get_info>
 		<filter>
 			<site-id>{SITE_ID}</site-id>
-      {USERNAME}
 		</filter>
 		<mailbox/>
+		<forwarding/>
+		<autoresponder/>
 	</get_info>
 </mail>
 </packet>
@@ -25,7 +26,7 @@ EOT;
      * @var array
      */
     protected $default_params = [
-      'site_id' => null,
+        'site_id' => null,
     ];
 
     /**
@@ -41,10 +42,7 @@ EOT;
 
             $params['site_id'] = $info['id'];
         }
-        if (!empty($params['username']))
-        {
-          $params['username'] = new Node('name', $params['username']);
-        }
+
         parent::__construct($config, $params);
     }
 
@@ -57,14 +55,37 @@ EOT;
         $result = [];
 
         foreach ($xml->mail->get_info->children() as $node) {
-            $result[] = [
-                'status' => (string)$node->status,
-                'id' => (int)$node->mailname->id,
-                'username' => (string)$node->mailname->name,
-                'enabled' => (bool)$node->mailname->mailbox->enabled,
-                'quota' => (int)$node->mailname->mailbox->quota,
-                'password' => (string)$node->mailname->password->value,
-            ];
+
+          if (isset($node->mailname))
+          {
+              $autoresponder = null;
+              if ($node->mailname->autoresponder->enabled == true)
+              {
+                $autoresponder = [
+                  'subject' => (string)$node->mailname->autoresponder->subject,
+                  'content_type' => (string)$node->mailname->autoresponder->content_type,
+                  'charset' => (string)$node->mailname->autoresponder->charset,
+                  'text' => (string)$node->mailname->autoresponder->text,
+                ];
+              }
+
+              $forwarding = null;
+              if ($node->mailname->forwarding->enabled == true)
+              {
+                $forwarding = (array)$node->mailname->forwarding->address;
+              }
+
+              $result[] = [
+                  'status' => (string)$node->status,
+                  'id' => (int)$node->mailname->id,
+                  'username' => (string)$node->mailname->name,
+                  'enabled' => (string)$node->mailname->mailbox->enabled === 'true' ? true: false,
+                  'password' => (string)$node->mailname->password->value,
+                  'quota' => (int)$node->mailname->mailbox->quota,
+                  'autoresponder' => $autoresponder,
+                  'forwarding' => $forwarding,
+                ];
+            }
         }
 
         return $result;
