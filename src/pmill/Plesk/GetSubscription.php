@@ -83,8 +83,8 @@ EOT;
             $subscriptions = [];
             foreach ($webspace->data->subscriptions->children() as $subscription) {
                 $subscriptions[] = [
-                    'locked' => (bool)$subscription->locked,
-                    'synchronized' => (bool)$subscription->synchronized,
+                    'locked' => (string)$subscription->locked === 'true' ? true: false,
+                    'synchronized' => (string)$subscription->synchronized === 'true' ? true: false,
                     'plan-guid' => (string)$subscription->plan->{"plan-guid"},
                 ];
             }

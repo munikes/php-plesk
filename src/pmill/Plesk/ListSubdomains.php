@@ -58,7 +58,7 @@ EOT;
                 'status' => (string)$node->status,
                 'parent' => (string)$node->data->parent,
                 'name' => (string)$node->data->name,
-                'php' => (bool)Xml::findProperty($node->data, 'php'),
+                'php' => (string)Xml::findProperty($node->data, 'php') === 'true' ? true: false,
                 'php_handler_id' => (string)Xml::findProperty($node->data, 'php_handler_id'),
                 'www_root' => (string)Xml::findProperty($node->data, 'www_root'),
             ];

@@ -39,8 +39,8 @@ EOT;
                 'home' => (string)$ftpuser->home,
                 'webspace-id' => (int)$ftpuser->{'webspace-id'},
                 'quota' => (float)$ftpuser->quota,
-                'permission-read' => (bool)$ftpuser->permissions->read,
-                'permission-write' => (bool)$ftpuser->permissions->write,
+                'permission-read' => (string)$ftpuser->permissions->read === 'true' ? true: false,
+                'permission-write' => (string)$ftpuser->permissions->write === 'true' ? true: false,
             ];
         }
 

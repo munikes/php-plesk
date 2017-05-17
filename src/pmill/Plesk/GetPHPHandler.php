@@ -52,7 +52,7 @@ EOT;
             'path' => (string)$php_handler->path,
             'clipath' =>(string)$php_handler->clipath,
             'phpini' => (string)$php_handler->phpini,
-            'custom' => (bool)$php_handler->custom,
+            'custom' => (string)$php_handler->custom === 'true' ? true: false,
             'handler_status' => (string)$php_handler->{'handler-status'}
         ];
     }
