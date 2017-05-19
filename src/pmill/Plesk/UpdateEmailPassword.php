@@ -11,15 +11,18 @@ class UpdateEmailPassword extends BaseRequest
 <packet version="{VERSION}">
     <mail>
         <update>
-            <add>
+            <set>
                 <filter>
-                    <domain_id>{DOMAIN_ID}</domain_id>
+                    <site-id>{SITE_ID}</site-id>
                     <mailname>
                         <name>{USERNAME}</name>
-                        <password>{PASSWORD}</password>
+                        <password>
+                          <value>{PASSWORD}</value>
+                          <type>crypt</type>
+                        </password>
                     </mailname>
                 </filter>
-            </add>
+            </set>
         </update>
     </mail>
 </packet>
@@ -34,7 +37,7 @@ EOT;
      * @var array
      */
     protected $default_params = [
-        'domain_id' => null,
+        'site_id' => null,
         'username' => null,
         'password' => null,
     ];
@@ -56,7 +59,7 @@ EOT;
             $request = new GetSite($config, ['domain' => $domain]);
             $info = $request->process();
 
-            $params['domain_id'] = $info['id'];
+            $params['site_id'] = $info['id'];
             $params['username'] = $username;
         }
 
@@ -70,7 +73,7 @@ EOT;
      */
     protected function processResponse($xml)
     {
-        $result = $xml->mail->update->result;
+        $result = $xml->mail->update->set->result;
 
         if ($result->status == 'error') {
             throw new ApiRequestException($result);
