@@ -12,7 +12,8 @@ class ListEmailAddresses extends BaseRequest
 <mail>
 	<get_info>
 		<filter>
-			<site-id>{SITE_ID}</site-id>
+      <site-id>{SITE_ID}</site-id>
+      {USERNAME}
 		</filter>
 		<mailbox/>
 		<forwarding/>
@@ -42,6 +43,11 @@ EOT;
 
             $params['site_id'] = $info['id'];
         }
+
+        if (isset($params['username'])){
+            $params['username'] = new Node('name', $params['username']);
+        }
+
 
         parent::__construct($config, $params);
     }
