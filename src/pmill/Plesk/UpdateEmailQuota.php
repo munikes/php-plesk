@@ -1,7 +1,7 @@
 <?php
 namespace pmill\Plesk;
 
-class AddEmailForwarding extends BaseRequest
+class UpdateEmailQuota extends BaseRequest
 {
     /**
      * @var string
@@ -11,18 +11,17 @@ class AddEmailForwarding extends BaseRequest
 <packet version="{VERSION}">
     <mail>
         <update>
-            <add>
+            <set>
                 <filter>
                     <site-id>{SITE_ID}</site-id>
                     <mailname>
                         <name>{USERNAME}</name>
-                        <forwarding>
-                          <enabled>true</enabled>
-                          {ADDRESSES}
-                        </forwarding>
+                        <mailbox>
+                            <quota>{QUOTA}</quota>
+                        </mailbox>
                     </mailname>
                 </filter>
-            </add>
+            </set>
         </update>
     </mail>
 </packet>
@@ -48,7 +47,6 @@ EOT;
      */
     public function __construct($config, $params)
     {
-        $addresses = [];
         if (isset($params['email'])) {
             if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
                 throw new ApiRequestException("Invalid email submitted");
@@ -57,19 +55,10 @@ EOT;
             list($username, $domain) = explode("@", $params['email']);
 
             $request = new GetSite($config, ['domain' => $domain]);
-            $site = $request->process();
+            $info = $request->process();
 
-            $params['site_id'] = $site['id'];
+            $params['site_id'] = $info['id'];
             $params['username'] = $username;
-        }
-
-        if (isset($params['addresses'])) {
-            foreach ($params['addresses'] as $address)
-            {
-                $addresses[] = new Node('address', $address);
-            }
-
-            $params['addresses'] = new NodeList($addresses);
         }
 
         parent::__construct($config, $params);
@@ -82,7 +71,7 @@ EOT;
      */
     protected function processResponse($xml)
     {
-        $result = $xml->mail->update->add->result;
+        $result = $xml->mail->update->set->result;
 
         if ($result->status == 'error') {
             throw new ApiRequestException($result);

@@ -18,7 +18,6 @@ class UpdateEmailPassword extends BaseRequest
                         <name>{USERNAME}</name>
                         <password>
                           <value>{PASSWORD}</value>
-                          <type>crypt</type>
                         </password>
                     </mailname>
                 </filter>

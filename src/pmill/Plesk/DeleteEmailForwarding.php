@@ -16,7 +16,9 @@ class DeleteEmailForwarding extends BaseRequest
                     <site-id>{SITE_ID}</site-id>
                     <mailname>
                         <name>{USERNAME}</name>
-                        {FORWARDING}
+                        <forwarding>
+                          {ADDRESSES}
+                        </forwarding>
                     </mailname>
                 </filter>
             </remove>
@@ -45,6 +47,7 @@ EOT;
      */
     public function __construct($config, $params)
     {
+        $addresses = [];
         if (isset($params['email'])) {
             if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
                 throw new ApiRequestException("Invalid email submitted");
@@ -57,25 +60,18 @@ EOT;
 
             $params['site_id'] = $site['id'];
             $params['username'] = $username;
-
-            $request = new GetEmailAddress($config, ['domain' => $domain]);
-            $email = $request->process();
         }
 
-        $key = array_search($params['forward'], $email['forwarding']);
-        unset($email['forwarding'][$key]);
-        if (count($email['forwarding']) == 0)
-        {
-          $request = new DisableEmailForwarding($config, $params);
-          return true;
-        }
-        else
-        {
+        if (isset($params['addresses'])) {
+            foreach ($params['addresses'] as $address)
+            {
+                $addresses[] = new Node('address', $address);
+            }
 
-
-          parent::__construct($config, $params);
+            $params['addresses'] = new NodeList($addresses);
         }
 
+        parent::__construct($config, $params);
     }
 
     /**
